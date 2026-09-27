@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import { Product } from '../types';
 import { CATEGORIES } from '../data/products';
 import { ProductCard } from './ProductCard';
-import { SlidersHorizontal, ArrowUpDown, X, Sparkles, Check } from 'lucide-react';
+import { SlidersHorizontal, ArrowUpDown, X, Sparkles } from 'lucide-react';
 import { useShop } from '../context/ShopContext';
 
 interface ProductGridProps {
@@ -91,14 +91,14 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
               onClick={() => onSelectCategory(cat.id)}
               className={`px-4 py-2 rounded-full text-xs sm:text-sm font-semibold whitespace-nowrap transition-all flex items-center gap-2 border ${
                 isSelected
-                  ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
-                  : 'bg-white text-slate-700 border-slate-200 hover:border-slate-300 hover:bg-slate-50'
+                  ? 'bg-amber-400 text-slate-950 border-amber-400 shadow-lg shadow-amber-400/20 font-bold'
+                  : 'bg-slate-900 text-slate-300 border-slate-800 hover:border-slate-700 hover:bg-slate-850 hover:text-white'
               }`}
             >
               <span>{cat.name}</span>
               <span
-                className={`text-[11px] px-1.5 py-0.2 rounded-full ${
-                  isSelected ? 'bg-slate-700 text-slate-200' : 'bg-slate-100 text-slate-500'
+                className={`text-[11px] px-1.5 py-0.2 rounded-full font-bold ${
+                  isSelected ? 'bg-slate-950 text-amber-400' : 'bg-slate-800 text-slate-400'
                 }`}
               >
                 {cat.count}
@@ -109,18 +109,18 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
       </div>
 
       {/* Filter and Controls Toolbar */}
-      <div className="mt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-4 rounded-2xl bg-white border border-slate-200/80 shadow-xs">
+      <div className="mt-4 flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 p-4 rounded-2xl bg-slate-900/90 border border-slate-800 shadow-md">
         
         {/* Left: Active Results Count & Active tags */}
-        <div className="flex flex-wrap items-center gap-2 text-xs text-slate-600">
-          <span className="font-semibold text-slate-900 text-sm">
+        <div className="flex flex-wrap items-center gap-2 text-xs text-slate-400">
+          <span className="font-bold text-white text-sm">
             {filteredProducts.length} {filteredProducts.length === 1 ? 'Product' : 'Products'} Found
           </span>
 
           {searchQuery && (
-            <span className="inline-flex items-center gap-1 bg-indigo-50 text-indigo-700 font-medium px-2.5 py-1 rounded-lg">
+            <span className="inline-flex items-center gap-1 bg-amber-400/10 text-amber-300 border border-amber-400/20 font-medium px-2.5 py-1 rounded-lg">
               Search: "{searchQuery}"
-              <button onClick={onClearSearch} className="hover:text-indigo-900 ml-1">
+              <button onClick={onClearSearch} className="hover:text-white ml-1">
                 <X className="w-3 h-3" />
               </button>
             </span>
@@ -129,7 +129,7 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
           {hasActiveFilters && (
             <button
               onClick={resetAllFilters}
-              className="text-indigo-600 hover:underline font-semibold text-xs ml-2"
+              className="text-amber-400 hover:text-amber-300 hover:underline font-bold text-xs ml-2 cursor-pointer"
             >
               Clear all filters
             </button>
@@ -140,18 +140,18 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
         <div className="flex items-center gap-3">
           
           {/* Quick in-stock checkbox */}
-          <label className="hidden md:flex items-center gap-2 text-xs font-medium text-slate-700 cursor-pointer select-none">
+          <label className="hidden md:flex items-center gap-2 text-xs font-semibold text-slate-300 cursor-pointer select-none">
             <input
               type="checkbox"
               checked={inStockOnly}
               onChange={(e) => setInStockOnly(e.target.checked)}
-              className="rounded border-slate-300 text-indigo-600 focus:ring-indigo-500"
+              className="rounded border-slate-700 bg-slate-800 text-amber-400 focus:ring-amber-400 accent-amber-400"
             />
             <span>In Stock Only</span>
           </label>
 
-          {/* Price Range Slider Quick Popover / Inline */}
-          <div className="hidden lg:flex items-center gap-2 text-xs text-slate-600">
+          {/* Price Range Slider */}
+          <div className="hidden lg:flex items-center gap-2 text-xs text-slate-300">
             <span>Under {formatPrice(maxPrice)}</span>
             <input
               type="range"
@@ -160,29 +160,29 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
               step="10"
               value={maxPrice}
               onChange={(e) => setMaxPrice(Number(e.target.value))}
-              className="w-24 accent-indigo-600 cursor-pointer"
+              className="w-24 accent-amber-400 cursor-pointer"
             />
           </div>
 
           {/* Sort Dropdown */}
-          <div className="flex items-center gap-1.5 bg-slate-50 border border-slate-200 rounded-xl px-2.5 py-1.5 text-xs">
-            <ArrowUpDown className="w-3.5 h-3.5 text-slate-500 shrink-0" />
+          <div className="flex items-center gap-1.5 bg-slate-950 border border-slate-800 rounded-xl px-2.5 py-1.5 text-xs text-slate-200">
+            <ArrowUpDown className="w-3.5 h-3.5 text-amber-400 shrink-0" />
             <select
               value={sortBy}
               onChange={(e) => setSortBy(e.target.value as any)}
-              className="bg-transparent text-slate-700 font-semibold focus:outline-none cursor-pointer"
+              className="bg-transparent text-slate-200 font-semibold focus:outline-none cursor-pointer"
             >
-              <option value="featured">Featured First</option>
-              <option value="price-low">Price: Low to High</option>
-              <option value="price-high">Price: High to Low</option>
-              <option value="rating">Highest Rated</option>
+              <option value="featured" className="bg-slate-900 text-white">Featured First</option>
+              <option value="price-low" className="bg-slate-900 text-white">Price: Low to High</option>
+              <option value="price-high" className="bg-slate-900 text-white">Price: High to Low</option>
+              <option value="rating" className="bg-slate-900 text-white">Highest Rated</option>
             </select>
           </div>
 
           {/* Mobile Filter Toggle */}
           <button
             onClick={() => setShowFilterDrawer(!showFilterDrawer)}
-            className="lg:hidden p-2 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700"
+            className="lg:hidden p-2 rounded-xl border border-slate-800 hover:bg-slate-800 text-slate-300"
             title="Filter options"
           >
             <SlidersHorizontal className="w-4 h-4" />
@@ -192,11 +192,11 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
 
       {/* Mobile Filters Panel */}
       {showFilterDrawer && (
-        <div className="mt-3 p-4 bg-slate-50 rounded-2xl border border-slate-200 lg:hidden space-y-4">
+        <div className="mt-3 p-4 bg-slate-900 rounded-2xl border border-slate-800 lg:hidden space-y-4 text-slate-200">
           <div>
-            <div className="flex justify-between text-xs font-semibold text-slate-700 mb-2">
+            <div className="flex justify-between text-xs font-semibold text-slate-300 mb-2">
               <span>Maximum Price</span>
-              <span>{formatPrice(maxPrice)}</span>
+              <span className="text-amber-400 font-bold">{formatPrice(maxPrice)}</span>
             </div>
             <input
               type="range"
@@ -205,16 +205,16 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
               step="10"
               value={maxPrice}
               onChange={(e) => setMaxPrice(Number(e.target.value))}
-              className="w-full accent-indigo-600"
+              className="w-full accent-amber-400"
             />
           </div>
 
-          <label className="flex items-center gap-2 text-xs font-medium text-slate-700 cursor-pointer">
+          <label className="flex items-center gap-2 text-xs font-medium text-slate-300 cursor-pointer">
             <input
               type="checkbox"
               checked={inStockOnly}
               onChange={(e) => setInStockOnly(e.target.checked)}
-              className="rounded border-slate-300 text-indigo-600"
+              className="rounded border-slate-700 bg-slate-800 text-amber-400 accent-amber-400"
             />
             <span>Show In-Stock items only</span>
           </label>
@@ -230,17 +230,17 @@ export const ProductGrid: React.FC<ProductGridProps> = ({
         </div>
       ) : (
         /* Empty State */
-        <div className="mt-12 py-16 px-4 text-center rounded-3xl bg-white border border-slate-200">
-          <div className="w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center mx-auto mb-4">
+        <div className="mt-12 py-16 px-4 text-center rounded-3xl bg-slate-900/90 border border-slate-800">
+          <div className="w-14 h-14 rounded-2xl bg-amber-400/10 border border-amber-400/20 text-amber-400 flex items-center justify-center mx-auto mb-4">
             <Sparkles className="w-7 h-7" />
           </div>
-          <h3 className="text-lg font-bold text-slate-900">No matching products found</h3>
-          <p className="mt-1 text-sm text-slate-500 max-w-sm mx-auto">
+          <h3 className="text-lg font-bold text-white">No matching products found</h3>
+          <p className="mt-1 text-sm text-slate-400 max-w-sm mx-auto">
             Try adjusting your search terms, changing the category, or expanding your price range.
           </p>
           <button
             onClick={resetAllFilters}
-            className="mt-6 px-5 py-2.5 rounded-xl bg-indigo-600 text-white text-xs font-semibold hover:bg-indigo-700 transition-colors shadow-md"
+            className="mt-6 px-5 py-2.5 rounded-xl bg-gradient-to-r from-amber-400 to-amber-500 hover:from-amber-300 hover:to-amber-400 text-slate-950 text-xs font-bold transition-colors shadow-lg shadow-amber-500/20 cursor-pointer"
           >
             Reset All Filters
           </button>

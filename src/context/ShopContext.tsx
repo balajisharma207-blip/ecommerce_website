@@ -58,15 +58,15 @@ interface ShopContextType {
 
 const ShopContext = createContext<ShopContextType | undefined>(undefined);
 
-const CART_STORAGE_KEY = 'novamart_cart_v1';
-const WISHLIST_STORAGE_KEY = 'novamart_wishlist_v1';
-const ORDERS_STORAGE_KEY = 'novamart_orders_v1';
-const REVIEWS_STORAGE_KEY = 'novamart_reviews_v1';
+const CART_STORAGE_KEY = 'bigmark_cart_v1';
+const WISHLIST_STORAGE_KEY = 'bigmark_wishlist_v1';
+const ORDERS_STORAGE_KEY = 'bigmark_orders_v1';
+const REVIEWS_STORAGE_KEY = 'bigmark_reviews_v1';
 
 export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [cart, setCart] = useState<CartItem[]>(() => {
     try {
-      const saved = localStorage.getItem(CART_STORAGE_KEY);
+      const saved = localStorage.getItem(CART_STORAGE_KEY) || localStorage.getItem('novamart_cart_v1');
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -75,7 +75,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const [wishlist, setWishlist] = useState<string[]>(() => {
     try {
-      const saved = localStorage.getItem(WISHLIST_STORAGE_KEY);
+      const saved = localStorage.getItem(WISHLIST_STORAGE_KEY) || localStorage.getItem('novamart_wishlist_v1');
       return saved ? JSON.parse(saved) : ['prod-1', 'prod-3'];
     } catch {
       return ['prod-1', 'prod-3'];
@@ -84,7 +84,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const [orders, setOrders] = useState<Order[]>(() => {
     try {
-      const saved = localStorage.getItem(ORDERS_STORAGE_KEY);
+      const saved = localStorage.getItem(ORDERS_STORAGE_KEY) || localStorage.getItem('novamart_orders_v1');
       return saved ? JSON.parse(saved) : [];
     } catch {
       return [];
@@ -93,7 +93,7 @@ export const ShopProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const [productReviews, setProductReviews] = useState<Record<string, Review[]>>(() => {
     try {
-      const saved = localStorage.getItem(REVIEWS_STORAGE_KEY);
+      const saved = localStorage.getItem(REVIEWS_STORAGE_KEY) || localStorage.getItem('novamart_reviews_v1');
       return saved ? JSON.parse(saved) : INITIAL_REVIEWS;
     } catch {
       return INITIAL_REVIEWS;
