@@ -1,0 +1,8 @@
+{
+  "name": "NovaMart E-Commerce Store",
+  "description": "Modern full-featured online store with intuitive catalog browsing, product filters, quick view, cart drawer, wishlist, and simulated checkout.",
+  "permissions": [],
+  "capabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
